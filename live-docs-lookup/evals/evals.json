@@ -1,0 +1,35 @@
+{
+  "skill_name": "anthropic-docs-grounding",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "I want to brainstorm building a multi-step tool-use agent with Claude that can search the web, analyze results, and send email summaries. Help me think through the architecture — what models, what tool definitions, how should I structure the agentic loop?",
+      "expected_output": "Claude fetches the latest Anthropic docs for tool use and model selection before brainstorming. The resulting architecture uses correct current model IDs and accurate tool definition schema, and mentions adaptive thinking if relevant.",
+      "files": []
+    },
+    {
+      "id": 2,
+      "prompt": "Write me an implementation plan for adding streaming responses from Claude to my Next.js app. I want to show tokens as they arrive in the UI. I'm using the TypeScript SDK.",
+      "expected_output": "Claude fetches the latest streaming and TypeScript SDK docs before planning. The implementation plan uses correct current SSE event types and SDK streaming syntax, not training-data guesses.",
+      "files": []
+    },
+    {
+      "id": 3,
+      "prompt": "I'm getting a 400 error when I try to use extended thinking with claude-opus-4-6. My code sets budget_tokens to 5000 and max_tokens to 1024. Help me debug this.",
+      "expected_output": "Claude fetches the latest extended thinking / adaptive thinking docs before debugging. Correctly identifies that budget_tokens is deprecated on Opus 4.6, that adaptive thinking should be used instead, and that budget_tokens must be less than max_tokens on older models anyway.",
+      "files": []
+    },
+    {
+      "id": 4,
+      "prompt": "Help me write tests for my Claude API integration. The code uses tool use with a manual agentic loop in Python. I need to test that tool calls are made correctly and results are sent back properly.",
+      "expected_output": "Claude fetches the latest tool use and Python SDK docs before writing tests. Tests use correct response object structure, correct field names (tool_use blocks, tool_result content type, stop_reason values), and current model IDs in test fixtures.",
+      "files": []
+    },
+    {
+      "id": 5,
+      "prompt": "I'm building a document processing pipeline that needs to send 50,000 prompts to Claude overnight. The prompts use a shared 10k token system prompt. Help me plan the most cost-efficient approach.",
+      "expected_output": "Claude fetches batch processing, prompt caching, and model/pricing docs before planning. Correctly identifies batch API (50% discount) plus prompt caching (cache_control: ephemeral on the shared system prompt) as the optimal combination, with current pricing and accurate cache_control syntax.",
+      "files": []
+    }
+  ]
+}
