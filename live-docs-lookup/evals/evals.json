@@ -1,5 +1,5 @@
 {
-  "skill_name": "anthropic-docs-grounding",
+  "skill_name": "live-docs-lookup",
   "evals": [
     {
       "id": 1,
@@ -29,6 +29,30 @@
       "id": 5,
       "prompt": "I'm building a document processing pipeline that needs to send 50,000 prompts to Claude overnight. The prompts use a shared 10k token system prompt. Help me plan the most cost-efficient approach.",
       "expected_output": "Claude fetches batch processing, prompt caching, and model/pricing docs before planning. Correctly identifies batch API (50% discount) plus prompt caching (cache_control: ephemeral on the shared system prompt) as the optimal combination, with current pricing and accurate cache_control syntax.",
+      "files": []
+    },
+    {
+      "id": 6,
+      "prompt": "I'm building a Python agent that uses OpenAI with tool use. Should I use the Chat Completions API or the Responses API? What's the difference and which should I use for a new project starting today?",
+      "expected_output": "Claude fetches the OpenAI models page and Responses API docs before answering. Correctly explains that Responses API is the newer preferred path for agentic use cases with built-in conversation state, recommends it for new projects, and uses current model IDs — not stale ones like gpt-4-turbo.",
+      "files": []
+    },
+    {
+      "id": 7,
+      "prompt": "I'm adding OpenAI streaming to my Python app using the openai SDK. Can you show me how to stream chat completions and handle the chunks as they arrive?",
+      "expected_output": "Claude fetches the latest OpenAI streaming docs and Python SDK docs before answering. Uses correct current streaming syntax and event handling, not patterns from the pre-v1 SDK rewrite.",
+      "files": []
+    },
+    {
+      "id": 8,
+      "prompt": "I want to call Gemini from Python for a general-purpose text generation task. Should I use google-generativeai or vertexai? And which Gemini model should I use — I've seen gemini-pro mentioned a lot but I'm not sure if that's current.",
+      "expected_output": "Claude fetches the Google Gemini models page and SDK docs before answering. Correctly distinguishes between google-generativeai (API key, no GCP setup) and vertexai (GCP project required), recommends the right one for a quick integration, and uses a current model ID from live docs — not gemini-pro from training memory.",
+      "files": []
+    },
+    {
+      "id": 9,
+      "prompt": "I'm building a Python script that uses the Gemini API for document summarization. Help me set up function calling so Gemini can call my extract_metadata() function when it needs to.",
+      "expected_output": "Claude fetches the latest Gemini function calling docs before answering. Uses correct current function declaration syntax, correct tool_config structure, and accurate field names — not patterns that may have changed since training cutoff.",
       "files": []
     }
   ]

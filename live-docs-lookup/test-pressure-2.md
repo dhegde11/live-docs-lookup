@@ -14,22 +14,22 @@ both mentioned in tutorials and aren't sure which to use.
 
 ## Observed agent behavior WITHOUT skill (baseline)
 
-The agent, drawing on training data (which may predate or have limited coverage
-of the Responses API launch in early 2025), gives one of these incorrect responses:
+Empirically tested March 2026. The baseline agent (training data only, no live
+doc fetch) gave a substantively correct answer on API choice — it correctly
+identified the Responses API as the preferred path for new agentic projects and
+accurately described key differences (stateful vs stateless, built-in tools,
+`previous_response_id`).
 
-**Failure mode A — Unaware of Responses API:**
-Agent describes only Chat Completions with function calling, never mentions the
-Responses API exists. Developer builds on a less capable foundation.
+**Where it falls short — unverified model IDs:**
+The baseline recommended `gpt-4o` and `gpt-4o-mini` without fetching the live
+models page. These appeared plausible at time of testing but could not be
+confirmed as current. Model IDs change frequently (new variants, deprecations,
+pricing tier changes) and developers copy-paste whatever appears in example code.
 
-**Failure mode B — Wrong recommendation:**
-Agent hedges ("both are valid, it depends") without knowing that Responses API
-is now the preferred path for agentic use cases — it has built-in conversation
-state management, native tool calling, and is what OpenAI is investing in for
-agent workflows going forward.
-
-**Failure mode C — Stale model IDs:**
-Agent recommends `gpt-4-turbo` or `gpt-4o-2024-05-13` for the implementation
-rather than current recommended models. Developer copy-pastes into their code.
+**Key insight:** For the Responses API vs Chat Completions question, training
+data appears sufficiently current as of early 2026. The primary risk is stale
+model IDs and any parameter-level changes to the Responses API surface that
+shipped after training cutoff.
 
 ## Expected behavior WITH skill
 
