@@ -54,9 +54,9 @@ You can also force it at any time with the slash command:
 
 Useful when you want a fresh doc check before starting a new feature, or when the skill didn't auto-trigger but you'd like it to.
 
-## Also available via superpowers
+## Superpowers compatibility
 
-This skill is submitted to [obra/superpowers](https://github.com/obra/superpowers). If you use the superpowers plugin system, you can install it from there.
+If you use the [obra/superpowers](https://github.com/obra/superpowers) plugin system, you can install live-docs-lookup separately and it will work alongside it. It will automatically trigger before brainstorming, plan writing, or other SDK-related workflows — so you always have current docs before implementation begins.
 
 ## Evals
 
