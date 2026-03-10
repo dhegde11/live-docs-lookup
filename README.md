@@ -1,33 +1,63 @@
-# agent-skills
+# live-docs-lookup
 
-A collection of skills for AI coding assistants — Claude Code, Cursor, Codex, OpenCode, and others that support the skills plugin format.
+A skill that fetches current AI SDK/API documentation before answering any question about Anthropic, OpenAI, or Google APIs. Prevents stale training data from producing wrong model IDs, deprecated parameters, or missed APIs.
 
-## What are skills?
+## The problem it solves
 
-Skills are reusable instruction sets that extend what an AI coding assistant can do. Each skill lives in its own directory and contains a `SKILL.md` file with a name, a trigger description, and step-by-step instructions. When you install a skill, the assistant automatically invokes it when the trigger conditions are met.
+AI coding assistants have a training cutoff. Documentation changes faster than models retrain:
 
-## Skills in this repo
+- Model IDs get renamed or deprecated (`gemini-1.5-flash` → `gemini-2.0-flash`)
+- Parameters get removed (`budget_tokens` deprecated on Claude Opus 4.6)
+- New APIs replace old ones (OpenAI Responses API replaces Chat Completions for agents)
+- Built-in tools go unnoticed (Anthropic's native `web_search` and `web_fetch` tools)
 
-| Skill | What it does |
-|-------|-------------|
-| [live-docs-lookup](./live-docs-lookup/) | Fetches current AI SDK/API documentation before answering — prevents stale training data from producing wrong model IDs, deprecated parameters, or missed APIs |
+A 30-second doc fetch before answering catches all of these. See [CREATION-LOG.md](./CREATION-LOG.md) for the real-world failure that motivated this skill.
 
-## Installing a skill
+## What it covers
 
-### Claude Code (recommended)
+| Provider | What gets fetched |
+|----------|------------------|
+| Anthropic | Models, tool use, streaming, prompt caching, batch API, extended thinking |
+| OpenAI | Models, Responses API vs Chat Completions, function calling, streaming, batch |
+| Google | Gemini models, Gemini API vs Vertex AI, function calling, structured output |
 
-Copy the skill directory into `~/.claude/skills/`:
+Detection is automatic — the skill infers which provider is in scope from imports, environment variable names, and model name patterns in your code or question.
+
+## Install
+
+### Claude Code
 
 ```bash
 cp -r live-docs-lookup ~/.claude/skills/
 ```
 
-The skill is active immediately — no restart needed.
+### Other tools (Cursor, Codex, OpenCode)
 
-### Other tools
+Copy the `live-docs-lookup/` directory into your tool's skills/plugins folder. Check your tool's documentation for the exact path.
 
-Check your tool's documentation for the skills or plugins directory. The `SKILL.md` format is shared across tools that support it.
+## How it triggers
 
-## License
+The skill activates automatically when you ask about:
 
-MIT — see [LICENSE](./LICENSE).
+- Which model to use
+- Tool use / function calling / structured output
+- Streaming responses
+- Prompt caching, batch processing, rate limits
+- SDK setup, debugging, or planning for any AI API integration
+- Anything that involves Anthropic, OpenAI, or Gemini
+
+You can also force it at any time with the slash command:
+
+```
+/live-docs-lookup
+```
+
+Useful when you want a fresh doc check before starting a new feature, or when the skill didn't auto-trigger but you'd like it to.
+
+## Superpowers compatibility
+
+If you use the [obra/superpowers](https://github.com/obra/superpowers) plugin system, you can install live-docs-lookup separately and it will work alongside it. It will automatically trigger before brainstorming, plan writing, or other SDK-related workflows — so plans are built on current docs.
+
+## Evals
+
+The `evals/` directory contains 9 test prompts (5 Anthropic, 2 OpenAI, 2 Google) used during development. Pass rate with skill: 100%. Without skill: 45%. See [CREATION-LOG.md](./CREATION-LOG.md) for details.
